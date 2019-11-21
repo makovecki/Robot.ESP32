@@ -20,16 +20,15 @@ void Udp::ReceiveTask(void *pvParameters)
             break;
         }
         
-        //int len = 
         recvfrom(udp->s, rx_buffer, sizeof(rx_buffer) - 1, 0, (struct sockaddr *)&source_addr, &socklen);
         udp->portOUT = source_addr.sin_port;
         udp->ip = source_addr.sin_addr;
         //std::cout << "Received:"<< len << " from port:"<< ntohs(source_addr.sin_port)<<"\n";
 
         int err = sendto(udp->s, payload, strlen(payload), 0, (struct sockaddr *)&source_addr, socklen);
-            if (err < 0) {
-                std::cout <<"Error occurred during sending\n";
-            } 
+        if (err < 0) {
+            std::cout <<"Error occurred during sending\n";
+        } 
     }
     vTaskDelete(NULL);
 }
