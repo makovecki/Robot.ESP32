@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:/esp32/esp-idf/components/**",
+                "${workspaceRoot}",
+                "${workspaceRoot}/components/**",
+                "C:/Users/BorisMakovecki/.espressif/tools/xtensa-esp32-elf/esp32-2019r1-8.2.0/xtensa-esp32-elf/xtensa-esp32-elf/include/c++/8.2.0/bits",
+                "C:/Users/BorisMakovecki/.espressif/tools/xtensa-esp32-elf/esp32-2019r1-8.2.0/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/8.2.0/include",
+                "${workspaceRoot}/build/include"
+            ],
+            "browse": {
+                "path": [
+                    "C:/esp32/esp-idf/components/**",
+                    "${workspaceRoot}",
+                    "${workspaceRoot}/components/**",
+                    "C:/Users/BorisMakovecki/.espressif/tools/xtensa-esp32-elf/esp32-2019r1-8.2.0/xtensa-esp32-elf/xtensa-esp32-elf/include/c++/8.2.0/bits",
+                    "C:/Users/BorisMakovecki/.espressif/tools/xtensa-esp32-elf/esp32-2019r1-8.2.0/xtensa-esp32-elf/lib/gcc/xtensa-esp32-elf/8.2.0/include",
+                    "${workspaceRoot}/build/include"
+                ],
+                "databaseFilename": ""
+            },
+            
+            "intelliSenseMode": "clang-x64",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
