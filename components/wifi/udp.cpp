@@ -3,14 +3,14 @@
 #include "lwip/sockets.h"
 #include <iostream>
 #include "udp.h"
-
+#include "broker.h"
 
 void Udp::ReceiveTask(void *pvParameters)
 {
     char rx_buffer[128];
     Udp *udp = static_cast<Udp *>(pvParameters);
-    const char *payload = "ESP32";
     
+    Broker *broker = new Broker();
     struct sockaddr_in source_addr; // Large enough for both IPv4 or IPv6
     socklen_t socklen = sizeof(source_addr);
     while (1) {
@@ -20,15 +20,22 @@ void Udp::ReceiveTask(void *pvParameters)
             break;
         }
         
-        recvfrom(udp->s, rx_buffer, sizeof(rx_buffer) - 1, 0, (struct sockaddr *)&source_addr, &socklen);
-        udp->portOUT = source_addr.sin_port;
-        udp->ip = source_addr.sin_addr;
+        int len=recvfrom(udp->s, rx_buffer, sizeof(rx_buffer) - 1, 0, (struct sockaddr *)&source_addr, &socklen);
+        //udp->portOUT = source_addr.sin_port;
+        //udp->ip = source_addr.sin_addr;
         //std::cout << "Received:"<< len << " from port:"<< ntohs(source_addr.sin_port)<<"\n";
+        if (len>=3) {
+            auto reply=broker->ProcessMessage(rx_buffer);
 
-        int err = sendto(udp->s, payload, strlen(payload), 0, (struct sockaddr *)&source_addr, socklen);
-        if (err < 0) {
-            std::cout <<"Error occurred during sending\n";
-        } 
+            char tx_buffer[(reply.size())];
+            uint16_t i = 0;
+            for (auto c : reply) tx_buffer[i++] = c;
+
+            int err = sendto(udp->s, &tx_buffer, sizeof(tx_buffer), 0, (struct sockaddr *)&source_addr, socklen);
+            if (err < 0) {
+                std::cout <<"Error occurred during sending\n";
+            } 
+        }
     }
     vTaskDelete(NULL);
 }
